@@ -1,7 +1,7 @@
-name: Snyk Priya2
+name: Snyk Scan SCA
 on: push
 jobs:
-  security:
+  snyk:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -9,12 +9,13 @@ jobs:
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          with:
+        with:
           command: monitor
-jobs:
+
   zap_scan:
     runs-on: ubuntu-latest
     name: Scan the webapplication
+    needs: snyk
     steps:
       - name: Checkout
         uses: actions/checkout@v2
